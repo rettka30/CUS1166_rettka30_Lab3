@@ -1,12 +1,17 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
 
-{% block content %}
+{% block body %}
     <h1>Create Course</h1>
-    <form action="{{ url_for('index')}}", method="post">
-      <label> Course Title </label>
-    	<input type=”text” name="course_title" value={{request.form.course_title}}>
-    	<label> Course Number </label>
-    	<input type=”text” name="course_number"value={{request.form.course_number}}>
-      <button type=”submit”> Submit </button>
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <p>
+          {{ form.course_title.label }}<br>
+          {{ form.course_title(size=120) }}<br>
+      </p>
+      <p>
+          {{ form.course_number.label }}<br>
+          {{ form.course_number(size=120) }}<br>
+      </p>
+      <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}
