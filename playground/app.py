@@ -1,9 +1,8 @@
 import sys
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from models import *
-from forms import CourseForm
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -18,12 +17,11 @@ def index():
 
 @app.route('/add_course', methods=['GET', 'POST'])
 def add_course():
-    form = CourseForm()
     # Get information from the form.
-    if form.validate_on_submit():
-        course_number = request.form.get("course_number")
-        course_title = request.form.get("course_title")
-        course = Course(course_number=course_number, course_title=course_title)
+    if request.method == 'POST':
+        course_title = request.form.get('course_title')
+        course_number = request.form.get('course_number')
+        course = Course(course_title=course_title, course_number=course_number)
         db.session.add(course)
         db.session.commit()
         return redirect(url_for('index'))
@@ -40,9 +38,15 @@ def register(course_id):
         grade = request.form.get("grade")
         # Use the utility method to add a new passenger in the database.
         course.add_student(name,grade)
+        return redirect(url_for('course'))
     # Use the relationships field in the flights model to retrieve
     # all passengers in the current flight.
-    students = Course.students
+    return render_template("register_student.html")
+
+@app.route('/course/<int:course_id>')
+def course(course_id):
+    course = Course.query.get(course_id)
+    students = course.student.order_by().all()
     return render_template("course_details.html", course=course, students=students)
 
 def main():

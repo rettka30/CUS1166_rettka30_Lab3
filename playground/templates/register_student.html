@@ -1,1 +1,13 @@
+{% extends 'layout.html' %}
 
+{% block body %}
+  <h1>Register Student</h1>
+  <form action="" method="POST">
+  	<label> Name </label>
+  	<input type="text" name="name" value={{request.form.name}}>
+  	<label> Grade </label>
+  	<input type="text" name="grade" value={{request.form.grade}}>
+
+  	<button type="submit"> Submit </button>
+  </form>
+{% endblock %}

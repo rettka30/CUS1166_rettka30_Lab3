@@ -4,13 +4,13 @@ db = SQLAlchemy()
 class Course(db.Model):
     __tablename__= "course"
     id = db.Column(db.Integer, primary_key=True)
-    course_number = db.Column(db.String(32), index=True, unique=True)
-    course_title = db.Column(db.String(64), index=True, unique=True)
+    course_number = db.Column(db.String(32), index=True)
+    course_title = db.Column(db.String(64), index=True)
     student = db.relationship('RegisteredStudent', backref='course', lazy=True)
 
     def add_student(self,name,grade):
         # Notice that we set the foreign key for the passenger class.
-        new_student = Passenger(name=name, grade=grade, course_id=self.id )
+        new_student = RegisteredStudent(name=name, grade=grade, course_id=self.id )
         db.session.add(new_student)
         db.session.commit()
 
