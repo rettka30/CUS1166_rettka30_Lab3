@@ -11,7 +11,16 @@
     </li>
   </ul>
 {% endfor %}
-<a href="{{ url_for('register') }}">
-  Register
-</a>
+<ul style="list-style-type:none;">
+  <li>
+    <a href="{{ url_for('register', course_id=course.id) }}">
+      Register
+    </a>
+  </li>
+  <li>
+    <a href="{{ url_for('index')}}">
+      Back
+    </a>
+  </li>
+</ul>
 {% endblock %}

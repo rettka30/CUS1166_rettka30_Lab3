@@ -38,7 +38,7 @@ def register(course_id):
         grade = request.form.get("grade")
         # Use the utility method to add a new passenger in the database.
         course.add_student(name,grade)
-        return redirect(url_for('course'))
+        return redirect(url_for('course', course_id=course_id))
     # Use the relationships field in the flights model to retrieve
     # all passengers in the current flight.
     return render_template("register_student.html")
@@ -46,7 +46,7 @@ def register(course_id):
 @app.route('/course/<int:course_id>')
 def course(course_id):
     course = Course.query.get(course_id)
-    students = course.student.order_by().all()
+    students = course.student
     return render_template("course_details.html", course=course, students=students)
 
 def main():
